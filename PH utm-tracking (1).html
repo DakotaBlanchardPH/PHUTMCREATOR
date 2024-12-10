@@ -13,10 +13,15 @@
       color: #333;
     }
     .header {
-      text-align: center;
+      display: flex;
+      align-items: center;
       padding: 20px;
       background-color: rgb(0, 0, 0);
       color: white;
+    }
+    .header img {
+      height: 50px; /* Adjust the logo size */
+      margin-right: 20px;
     }
     .header h1 {
       font-size: 2.5rem;
@@ -61,20 +66,13 @@
     button:hover {
       background-color: rgb(230, 188, 0);
     }
+    button:focus, select:focus, input:focus {
+      outline: 2px solid #0056b3;
+    }
     #customCampaignGroup {
       display: none;
     }
-    #result {
-      margin-top: 20px;
-      padding: 15px;
-      border: 1px solid #ccc;
-      background-color: #f8f9fb;
-      border-radius: 5px;
-      font-size: 1rem;
-      max-height: 200px;
-      overflow-y: auto;
-    }
-    #history {
+    #result, #history {
       margin-top: 20px;
       padding: 15px;
       border: 1px solid #ccc;
@@ -99,16 +97,17 @@
 </head>
 <body>
   <div class="header">
+    <img src="/Pilothouselogo.JPG" alt="Pilothouse Logo">
     <h1>PILOTHOUSE GOOGLE UTM CREATOR</h1>
   </div>
   <div class="container">
     <div class="form-group">
       <label for="baseUrl">Base URL:</label>
-      <input type="url" id="baseUrl" placeholder="https://example.com" required>
+      <input type="url" id="baseUrl" placeholder="https://example.com" required aria-label="Base URL">
     </div>
     <div class="form-group">
       <label for="campaign">Campaign Name:</label>
-      <select id="campaign" onchange="toggleCustomCampaign()">
+      <select id="campaign" onchange="toggleCustomCampaign()" aria-label="Campaign Name">
         <option value="" disabled selected>Please select</option>
         <option value="search_brand">Search Brand</option>
         <option value="search_generic">Search Generic</option>
@@ -127,15 +126,15 @@
     </div>
     <div class="form-group" id="customCampaignGroup">
       <label for="customCampaign">Custom Campaign Name:</label>
-      <input type="text" id="customCampaign" placeholder="Enter a custom campaign name">
+      <input type="text" id="customCampaign" placeholder="Enter a custom campaign name" aria-label="Custom Campaign Name">
     </div>
     <div class="form-group">
       <label for="term">Campaign Term (Optional):</label>
-      <input type="text" id="term" placeholder="Keyword">
+      <input type="text" id="term" placeholder="Keyword" aria-label="Campaign Term">
     </div>
     <div class="form-group">
       <label for="content">Campaign Content (Optional):</label>
-      <input type="text" id="content" placeholder="Ad Content">
+      <input type="text" id="content" placeholder="Ad Content" aria-label="Campaign Content">
     </div>
     <button onclick="generateUrl()">Generate URL</button>
     <div id="result"></div>
@@ -198,6 +197,13 @@
       // Store the generated URL in history
       history.push(utmUrl);
       updateHistory();
+
+      // Clear the input fields
+      document.getElementById('baseUrl').value = '';
+      document.getElementById('campaign').value = '';
+      document.getElementById('customCampaign').value = '';
+      document.getElementById('term').value = '';
+      document.getElementById('content').value = '';
     }
 
     function updateHistory() {
