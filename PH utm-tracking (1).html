@@ -173,7 +173,7 @@
 
       let campaignName = campaignDropdown.value;
       if (campaignName === 'custom' && customCampaign) {
-        campaignName = customCampaign;
+        campaignName = customCampaign.replace(/\s+/g, '_'); // Replace spaces with underscores
       } else if (campaignName === 'custom' && !customCampaign) {
         alert('Please enter a custom campaign name');
         return;
@@ -218,3 +218,4 @@
   </script>
 </body>
 </html>
+
